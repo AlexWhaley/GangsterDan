@@ -9,9 +9,8 @@ public class ClawController : MonoBehaviour
 
     private Animator animator;
 
-    private bool isDropping;
-    private bool isGrabbing;
-    private bool justGrabbed;
+    private ClawState state;
+    private float interactDelay = 0;
 
     private void Start()
     {
@@ -20,48 +19,60 @@ public class ClawController : MonoBehaviour
 
     public void Update()
     {
+        interactDelay -= Time.deltaTime;
+
         MoveClaw();
-        ToggleGrab();
+        Interact();
     }
 
     private void MoveClaw()
     {
-        Vector2 translation = Vector2.zero;
+        float translation = 0;
 
         if (Input.GetKey(KeyCode.A))
         {
-            translation.x -= MoveSpeed;
+            translation -= MoveSpeed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            translation.x += MoveSpeed;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            translation.y -= DropSpeed;
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            translation.y += DropSpeed;
+            translation += MoveSpeed;
         }
 
-        isDropping = Input.GetKey(KeyCode.S);
-
-        transform.Translate(translation.x * Time.deltaTime, translation.y * Time.deltaTime, 0);
+        transform.Translate(translation * Time.deltaTime, 0, 0);
     }
 
-    private void ToggleGrab()
+    private void Interact()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && interactDelay <= 0)
         {
-            isGrabbing = !isGrabbing;
-            justGrabbed = isGrabbing;
-            animator.SetTrigger(isGrabbing ? "Close" : "Open");
-        }
-        else
-        {
-            justGrabbed = false;
+            switch (state)
+            {
+                case ClawState.Open:
+                    animator.SetTrigger("Drop");
+                    state = ClawState.Drop;
+                    interactDelay = 1.5f;
+                    break;
+                case ClawState.Drop:
+                    animator.SetTrigger("Return");
+                    state = ClawState.Return;
+                    interactDelay = 1.0f;
+                    break;
+                case ClawState.Return:
+                    animator.SetTrigger("Open");
+                    state = ClawState.Open;
+                    interactDelay = 0.75f;
+                    break;
+                default:
+                    break;
+            }
         }
     }
+}
+
+public enum ClawState
+{
+    Open,
+    Drop,
+    Return
 }
 
