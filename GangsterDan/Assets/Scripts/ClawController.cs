@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ClawController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float dropSpeed = 10f;
+    [SerializeField] private float MoveSpeed = 5f;
+    [SerializeField] private float DropSpeed = 10f;
 
     private Animator animator;
 
@@ -30,19 +30,19 @@ public class ClawController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
         {
-            translation.x -= moveSpeed;
+            translation.x -= MoveSpeed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            translation.x += moveSpeed;
+            translation.x += MoveSpeed;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            translation.y -= dropSpeed;
+            translation.y -= DropSpeed;
         }
         if (Input.GetKey(KeyCode.W))
         {
-            translation.y += dropSpeed;
+            translation.y += DropSpeed;
         }
 
         isDropping = Input.GetKey(KeyCode.S);
