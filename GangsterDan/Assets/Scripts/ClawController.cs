@@ -5,7 +5,6 @@ using UnityEngine;
 public class ClawController : MonoBehaviour
 {
     [SerializeField] private float MoveSpeed = 5f;
-    [SerializeField] private float DropSpeed = 10f;
 
     private Animator animator;
 
@@ -38,7 +37,10 @@ public class ClawController : MonoBehaviour
             translation += MoveSpeed;
         }
 
-        transform.Translate(translation * Time.deltaTime, 0, 0);
+        translation *= Time.deltaTime;
+        var x = Mathf.Clamp(transform.position.x + translation, -17.0f, 17.5f);
+
+        transform.position = new Vector3(x, transform.position.y, transform.position.z);
     }
 
     private void Interact()

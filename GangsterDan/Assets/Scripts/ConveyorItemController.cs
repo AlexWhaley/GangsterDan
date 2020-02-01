@@ -19,7 +19,7 @@ public class ConveyorItemController : MonoBehaviour
         }
         else if (collision.CompareTag("Conveyor"))
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(1, 0);
+            GetComponent<Rigidbody2D>().velocity = new Vector2(ScavengeManager.Instance.ConveyorSpeed, 0);
         }
     }
 }
