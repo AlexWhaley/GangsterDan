@@ -10,6 +10,6 @@ public class RaceCameraBehaviour : MonoBehaviour
 	void Update()
 	{
 		var currentPosition = transform.position;
-		transform.position = new Vector3(_rigidbody.position.x, currentPosition.y, currentPosition.z);
+		transform.position = new Vector3(_rigidbody.position.x, _rigidbody.position.y, currentPosition.z);
 	}
 }
