@@ -9,6 +9,7 @@ public class ScavengeManager : MonoBehaviour
     public List<GameObject> SpawnableItems;
     public Transform SpawnPoint;
     public float SpawnDelay = 5;
+    public float ConveyorSpeed = 2;
 
     private List<ItemData> scavengedItems = new List<ItemData>();
     private float time = 0;
@@ -22,6 +23,7 @@ public class ScavengeManager : MonoBehaviour
         else
         {
             Instance = this;
+            time = SpawnDelay;
         }
     }
 
