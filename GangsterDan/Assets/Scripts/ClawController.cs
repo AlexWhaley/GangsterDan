@@ -10,7 +10,8 @@ public class ClawController : MonoBehaviour
     private Animator animator;
 
     private bool isDropping;
-
+    private bool isGrabbing;
+    private bool justGrabbed;
 
     private void Start()
     {
@@ -20,32 +21,46 @@ public class ClawController : MonoBehaviour
     public void Update()
     {
         MoveClaw();
-        Grab();
+        ToggleGrab();
     }
 
     private void MoveClaw()
     {
-        float translation = 0;
+        Vector2 translation = Vector2.zero;
 
         if (Input.GetKey(KeyCode.A))
         {
-            translation -= moveSpeed;
+            translation.x -= moveSpeed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            translation += moveSpeed;
+            translation.x += moveSpeed;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            translation.y -= dropSpeed;
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            translation.y += dropSpeed;
         }
 
         isDropping = Input.GetKey(KeyCode.S);
 
-        transform.Translate(translation * Time.deltaTime, isDropping ? -dropSpeed * Time.deltaTime : 0, 0);
+        transform.Translate(translation.x * Time.deltaTime, translation.y * Time.deltaTime, 0);
     }
 
-    private void Grab()
+    private void ToggleGrab()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            animator.SetTrigger("Close");
+            isGrabbing = !isGrabbing;
+            justGrabbed = isGrabbing;
+            animator.SetTrigger(isGrabbing ? "Close" : "Open");
+        }
+        else
+        {
+            justGrabbed = false;
         }
     }
 }

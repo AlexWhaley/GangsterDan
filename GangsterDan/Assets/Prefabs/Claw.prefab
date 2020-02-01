@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7185506731613933976}
   - component: {fileID: 3155390556161925921}
   - component: {fileID: 8097585255306626689}
+  - component: {fileID: 8990414442952294109}
   m_Layer: 0
   m_Name: Claw
   m_TagString: Untagged
@@ -68,6 +69,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!58 &8990414442952294109
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681897040445548662}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -3.97}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1 &2294174441028603305
 GameObject:
   m_ObjectHideFlags: 0
