@@ -131,9 +131,10 @@ public class BikeController : MonoBehaviour
 		if (Input.GetKey(KeyCode.A))// && _rigiDean.angularVelocity > - _maxAngularDeanForce)
 		{
 			float torque = _leanDeanForce * Time.deltaTime;
-			_rigiDean.AddTorque(torque);
+			_rigiDean.AddTorque(torque / 30f);
 
-			if (_frame.angularVelocity < 1.5f)
+			Debug.Log(_frame.angularVelocity);
+			if (_frame.angularVelocity < _maxAngularDeanForce)
 			{
 				_frame.AddTorque(torque);
 			}
@@ -141,9 +142,11 @@ public class BikeController : MonoBehaviour
 		else if (Input.GetKey(KeyCode.D))// && _rigiDean.angularVelocity < _maxAngularDeanForce)
 		{
 			float torque = -_leanDeanForce * Time.deltaTime;
-			_rigiDean.AddTorque(torque);
+			_rigiDean.AddTorque(torque / 30f);
 
-			if (_frame.angularVelocity > -1.5f)
+
+			Debug.Log(_frame.angularVelocity);
+			if (_frame.angularVelocity > -_maxAngularDeanForce)
 			{
 				_frame.AddTorque(torque);
 			}
