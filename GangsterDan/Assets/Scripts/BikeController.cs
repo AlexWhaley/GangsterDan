@@ -73,40 +73,78 @@ public class BikeController : MonoBehaviour
 
 	public void ConstructBike(BikeConstructionData data)
 	{
-		GameObject frame = Instantiate(data.frame.gameObject, transform.position, transform.rotation);
-		_frame = frame.GetComponent<FrameItem>();
+		GameObject frame;
 
-		_frameRB = frame.GetComponent<Rigidbody2D>();
-		_backWheelJoint = _frame.backWheelJoint;
-		_frontWheelJoint = _frame.frontWheelJoint;
+		if (data.frame != null)
+		{
+			frame = Instantiate(data.frame.gameObject, transform.position, transform.rotation);
+			_frame = frame.GetComponent<FrameItem>();
 
-		_backWheelMotor = _backWheelJoint.motor;
-		_frontWheelMotor = _frontWheelJoint.motor;
+			_frameRB = frame.GetComponent<Rigidbody2D>();
+			_backWheelJoint = _frame.backWheelJoint;
+			_frontWheelJoint = _frame.frontWheelJoint;
 
-		//Create back wheel
-		Vector3 backWheelWorldPos = frame.transform.TransformPoint(_backWheelJoint.anchor);
-		GameObject backWheel = Instantiate(data.backWheel.gameObject, backWheelWorldPos, frame.transform.rotation);
+			_backWheelMotor = _backWheelJoint.motor;
+			_frontWheelMotor = _frontWheelJoint.motor;
+		}
+		else
+		{
+			_isDead = true;
+			raceOverlay.Wasted();
+			return;
+		}
 
-		_backWheelJoint.connectedBody = backWheel.GetComponent<Rigidbody2D>();
+		if (data.backWheel != null)
+		{
+			//Create back wheel
+			Vector3 backWheelWorldPos = frame.transform.TransformPoint(_backWheelJoint.anchor);
+			GameObject backWheel = Instantiate(data.backWheel.gameObject, backWheelWorldPos, frame.transform.rotation);
+			_backWheelJoint.connectedBody = backWheel.GetComponent<Rigidbody2D>();
+		}
+		else
+		{
+			_backWheelJoint.enabled = false;
+		}
 
-		// Create front wheel
-		Vector3 frontWheelWorldPos = frame.transform.TransformPoint(_frontWheelJoint.anchor);
-		GameObject frontWheel = Instantiate(data.frontWheel.gameObject, frontWheelWorldPos, frame.transform.rotation);
+		if (data.frontWheel != null)
+		{
+			// Create front wheel
+			Vector3 frontWheelWorldPos = frame.transform.TransformPoint(_frontWheelJoint.anchor);
+			GameObject frontWheel = Instantiate(data.frontWheel.gameObject, frontWheelWorldPos, frame.transform.rotation);
 
-		_frontWheelJoint.connectedBody = frontWheel.GetComponent<Rigidbody2D>();
+			_frontWheelJoint.connectedBody = frontWheel.GetComponent<Rigidbody2D>();
+		}
+		else
+		{
+			_backWheelJoint.enabled = false;
+		}
 
+		if (data.handlebars != null)
+		{
+			GameObject handlebars = Instantiate(data.handlebars.gameObject, _frame.handlebarTransform);
+			var handlebarItem = handlebars.GetComponent<HandlebarItem>();
 
-		GameObject handlebars = Instantiate(data.handlebars.gameObject, _frame.handlebarTransform);
-		var handlebarItem = handlebars.GetComponent<HandlebarItem>();
+			Vector3 localHandlebarPosition = _frameRB.transform.InverseTransformPoint(handlebarItem.handPosition.position);
+			_ragdollController.SetHandJointAnchor(_frameRB, localHandlebarPosition);
+		}
+		else
+		{
+			_ragdollController.DisableHandJoint();
+		}
 
-		Vector3 localHandlebarPosition = _frameRB.transform.InverseTransformPoint(handlebarItem.handPosition.position);
-		_ragdollController.SetHandJointAnchor(_frameRB, localHandlebarPosition);
+		if (data.seatItem != null)
+		{
+			GameObject seat = Instantiate(data.seatItem.gameObject, _frame.seatTransform);
+			var seatItem = seat.GetComponent<SeatItem>();
 
-		GameObject seat = Instantiate(data.seatItem.gameObject, _frame.seatTransform);
-		var seatItem = seat.GetComponent<SeatItem>();
-
-		Vector3 localSeatPosition = _frameRB.transform.InverseTransformPoint(seatItem.assPosition.position);
-		_ragdollController.SetSeatJointAnchor(_frameRB, localSeatPosition);
+			Vector3 localSeatPosition = _frameRB.transform.InverseTransformPoint(seatItem.assPosition.position);
+			_ragdollController.SetSeatJointAnchor(_frameRB, localSeatPosition);
+		}
+		else
+		{
+			_ragdollController.DisableSeatJoint();
+		}
+		
 
 		SetConfiguredValues();
 		CameraDirector.Instance.SetTarget(_ragdollController.torso.transform);

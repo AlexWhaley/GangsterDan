@@ -52,7 +52,6 @@ public class RagdollController : MonoBehaviour
 		}
 	}
 
-
 	public void SetHandJointAnchor(Rigidbody2D rb, Vector2 anchor)
 	{
 		_handBoneJoint.connectedBody = rb;
@@ -65,5 +64,13 @@ public class RagdollController : MonoBehaviour
 		_seatBoneJoint.connectedAnchor = anchor;
 	}
 	
+	public void DisableHandJoint()
+	{
+		_handBoneJoint.enabled = false;
+	}
 
+	public void DisableSeatJoint()
+	{
+		_seatBoneJoint.enabled = false;
+	}
 }
