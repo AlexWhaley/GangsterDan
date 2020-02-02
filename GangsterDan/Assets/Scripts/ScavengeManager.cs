@@ -11,7 +11,11 @@ public class ScavengeManager : MonoBehaviour
     public ScavengeState State;
     public float ConveyorSpeed = 2;
     
-    [SerializeField] private List<GameObject> SpawnableItems;
+    [SerializeField] private List<GameObject> SpawnableWheels;
+    [SerializeField] private List<GameObject> SpawnableFrames;
+    [SerializeField] private List<GameObject> SpawnableSeats;
+    [SerializeField] private List<GameObject> SpawnableHandlebars;
+
     [SerializeField] private Transform SpawnPoint;
     [SerializeField] private float SpawnDelay = 5;
     [SerializeField] private float TotalTime = 60.0f;
@@ -24,7 +28,10 @@ public class ScavengeManager : MonoBehaviour
     [SerializeField] private GameObject SeatCheckmark;
     [SerializeField] private GameObject HandlebarsCheckmark;
 
-    private List<ItemData> scavengedItems = new List<ItemData>();
+    private List<int> wheelIndices = new List<int>();
+    private List<int> frameIndices = new List<int>();
+    private List<int> seatIndices = new List<int>();
+    private List<int> handlebarsIndices = new List<int>();
     private float spawnTime = 0;
     private float timeRemaining;
 
@@ -81,7 +88,7 @@ public class ScavengeManager : MonoBehaviour
                     spawnTime = 0;
                 }
 
-                if (timeRemaining < 0.0f)
+                if (timeRemaining < 0.0f || HasAllNeededObjects())
                 {
                     State = ScavengeState.TimeFinished;
                     timeRemaining = 5.0f;
@@ -97,31 +104,41 @@ public class ScavengeManager : MonoBehaviour
         }
     }
 
+    private bool HasAllNeededObjects()
+    {
+        return wheelIndices.Count() >= 2 &&
+               frameIndices.Count() >= 1 &&
+               seatIndices.Count() >= 1 &&
+               handlebarsIndices.Count() >= 1;
+    }
+
     public void CollectItem(ItemData item)
     {
-        scavengedItems.Add(item);
-
         switch (item.Type)
         {
             case ItemType.Wheel:
-                if (!WheelsCheckmark.activeSelf && scavengedItems.Where(x => x.Type == ItemType.Wheel).Count() >= 2)
+                wheelIndices.Add(item.Index);
+                if (!WheelsCheckmark.activeSelf && wheelIndices.Count() >= 2)
                 {
                     WheelsCheckmark.SetActive(true);
                 }
                 break;
             case ItemType.Frame:
+                frameIndices.Add(item.Index);
                 if (!FrameCheckmark.activeSelf)
                 {
                     FrameCheckmark.SetActive(true);
                 }
                 break;
             case ItemType.Seat:
+                seatIndices.Add(item.Index);
                 if (!SeatCheckmark.activeSelf)
                 {
                     SeatCheckmark.SetActive(true);
                 }
                 break;
             case ItemType.Handlebars:
+                handlebarsIndices.Add(item.Index);
                 if (!HandlebarsCheckmark.activeSelf)
                 {
                     HandlebarsCheckmark.SetActive(true);
@@ -132,9 +149,49 @@ public class ScavengeManager : MonoBehaviour
 
     private void SpawnItem()
     {
-        int i = Random.Range(0, SpawnableItems.Count);
+        var type = (ItemType)Random.Range(0, 4);
 
-        Instantiate(SpawnableItems[i], SpawnPoint.position, Quaternion.identity);
+        List<GameObject> itemList = new List<GameObject>();
+
+        switch (type)
+        {
+            case ItemType.Wheel:
+                itemList = SpawnableWheels;
+                break;
+            case ItemType.Frame:
+                itemList = SpawnableFrames;
+                break;
+            case ItemType.Seat:
+                itemList = SpawnableSeats;
+                break;
+            case ItemType.Handlebars:
+                itemList = SpawnableHandlebars;
+                break;
+            default:
+                break;
+        }
+
+        int i = Random.Range(0, itemList.Count);
+
+        var go = Instantiate(itemList[i], SpawnPoint.position, Quaternion.identity) as GameObject;
+
+        var itemController = go.AddComponent<ConveyorItemController>();
+
+        itemController.Data = new ItemData()
+        {
+            Type = type,
+            Index = i
+        };
+
+        var joints = go.GetComponents<Joint2D>();
+
+        foreach (var j in joints)
+        {
+            j.enabled = false;
+        }
+
+        go.transform.localScale *= type == ItemType.Frame ? 1 : 1.5f;
+        go.GetComponent<Rigidbody2D>().collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
 
     private void UpdateGameTimer()

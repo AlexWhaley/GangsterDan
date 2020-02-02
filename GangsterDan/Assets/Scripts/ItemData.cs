@@ -7,7 +7,7 @@ using UnityEngine;
 public class ItemData
 {
     public ItemType Type;
-    public string ItemName;
+    public int Index;
 }
 
 public enum ItemType

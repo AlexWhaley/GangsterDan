@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ConveyorItemController : MonoBehaviour
 {
-    [SerializeField] private ItemData Data;
+    public ItemData Data;
 
     private void OnTriggerStay2D(Collider2D collision)
     {

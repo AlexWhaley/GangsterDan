@@ -1186,12 +1186,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   State: 0
   ConveyorSpeed: 2
-  SpawnableItems:
-  - {fileID: 8272339125382840891, guid: ae7e8857e31388f42a3dcee74a936458, type: 3}
-  - {fileID: 8272339125382840891, guid: d9322943cca51134ea9cb831370590c2, type: 3}
+  SpawnableWheels:
+  - {fileID: 4853834662617373488, guid: 957872df7c391874b873f889396c7bd9, type: 3}
+  SpawnableFrames:
+  - {fileID: 2836139735616502462, guid: 8f1b71112d858914c9ab6dc37fbbbf60, type: 3}
+  SpawnableSeats:
+  - {fileID: 8232964265027163351, guid: 8f67d3befc5d7484fbff18a956454818, type: 3}
+  SpawnableHandlebars:
+  - {fileID: 1960266805957122624, guid: d0941c6e28c9049479459a284a9db7fd, type: 3}
   SpawnPoint: {fileID: 837478633}
   SpawnDelay: 3
-  TotalTime: 60
+  TotalTime: 90
   TimerText: {fileID: 249591995}
   CountdownText: {fileID: 389085049}
   FrameCheckmark: {fileID: 72927824}
@@ -2438,7 +2443,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c991b4a2f1e347340a3aad5c53cd27d9, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
