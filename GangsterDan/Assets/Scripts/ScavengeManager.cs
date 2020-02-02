@@ -245,7 +245,7 @@ public class ScavengeManager : MonoBehaviour
 
             hasLoadedRace = true;
 
-            SceneManager.LoadScene("Race");
+            SceneManager.LoadScene("Race", LoadSceneMode.Single);
         }
     }
 

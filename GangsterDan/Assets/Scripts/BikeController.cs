@@ -199,9 +199,9 @@ public class BikeController : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Space))
+		if (Input.GetKeyDown(KeyCode.P))
 		{
-			SceneManager.LoadScene("Scavenge");
+			SceneManager.LoadScene("Scavenge", LoadSceneMode.Single);
 		}
 	}
 
