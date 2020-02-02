@@ -31,6 +31,7 @@ public class ScavengeManager : MonoBehaviour
         {
             Instance = this;
         }
+        Init();
     }
 
     public void Init()
