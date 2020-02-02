@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BikeController : MonoBehaviour
 {
@@ -49,6 +50,9 @@ public class BikeController : MonoBehaviour
 	private RagdollController _ragdollController;
 
 	private bool _isDead;
+
+	[SerializeField]
+	private RaceOverlay raceOverlay;
 
 
 	// Start is called before the first frame update
@@ -125,6 +129,12 @@ public class BikeController : MonoBehaviour
 		}
 
 		_isDead = true;
+		raceOverlay.Wasted();
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		raceOverlay.Success();
 	}
 
 	private void SetConfiguredValues()
@@ -141,6 +151,15 @@ public class BikeController : MonoBehaviour
 			wheel.breakForce = _breakForce;
 		}
 	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			SceneManager.LoadScene("Scavenge");
+		}
+	}
+
 	// Update is called once per frame
 	void FixedUpdate()
 	{
