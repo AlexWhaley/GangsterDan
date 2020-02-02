@@ -42,6 +42,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BG
+    uniqueID: 1654378325
+    locked: 0
+  - name: Rubbish Piles
+    uniqueID: 1510284133
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
