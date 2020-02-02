@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _motorForceMax: 800
-  _motorForceAcceleration: 350
-  _motorForceDecceleration: 350
+  _motorForceAcceleration: 450
+  _motorForceDecceleration: 550
   _breakForce: 4000
   _gravityScale: 0.8
   _twoWheelDrive: 1
