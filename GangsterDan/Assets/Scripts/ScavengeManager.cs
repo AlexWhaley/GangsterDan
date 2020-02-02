@@ -152,11 +152,11 @@ public class ScavengeManager : MonoBehaviour
 
     private void SpawnItem()
     {
-        var randI = Random.Range(0, 5);
+        var randI = Random.Range(0, 6);
 
-        if (randI == 4)
+        if (randI >= 4)
         {
-            randI = 3;
+            randI = 0;
         }
 
         var type = (ItemType)randI;

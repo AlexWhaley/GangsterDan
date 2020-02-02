@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Opening.unity
-    guid: 552fc650a72050f499dd0088622e2b01
-  - enabled: 1
     path: Assets/Scenes/Scavenge.unity
     guid: c27ecf0437c4aa046ad48c624297d6df
   - enabled: 1
