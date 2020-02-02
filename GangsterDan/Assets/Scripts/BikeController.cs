@@ -86,13 +86,17 @@ public class BikeController : MonoBehaviour
 
 
 		GameObject handlebars = Instantiate(data.handlebars.gameObject, _frame.handlebarTransform);
+		var handlebarItem = handlebars.GetComponent<HandlebarItem>();
 
-		Vector3 localSeatPosition = _frameRB.transform.InverseTransformPoint(_frame.seatTransform.position);
+		Vector3 localHandlebarPosition = _frameRB.transform.InverseTransformPoint(handlebarItem.handPosition.position);
+		_ragdollController.SetHandJointAnchor(_frameRB, localHandlebarPosition);
+
+		GameObject seat = Instantiate(data.seatItem.gameObject, _frame.seatTransform);
+		var seatItem = seat.GetComponent<SeatItem>();
+
+		Vector3 localSeatPosition = _frameRB.transform.InverseTransformPoint(seatItem.assPosition.position);
 		_ragdollController.SetSeatJointAnchor(_frameRB, localSeatPosition);
 
-		Vector3 localHandlebarPosition = _frameRB.transform.InverseTransformPoint(_frame.handlebarTransform.position);
-		_ragdollController.SetHandJointAnchor(_frameRB, localHandlebarPosition);
-		
 		SetConfiguredValues();
 		CameraDirector.Instance.SetTarget(_ragdollController.torso.transform);
 		_ragdollController.headCollisionEventSystem.onValidCollision += DestroyBike;
@@ -105,8 +109,14 @@ public class BikeController : MonoBehaviour
 
 	private void DestroyBike(Vector2 explosionPoint)
 	{
-		_backWheelJoint.enabled = false;
-		_frontWheelJoint.enabled = false;
+		if (_backWheelJoint != null)
+		{
+			_backWheelJoint.enabled = false;
+		}
+		if (_frontWheelJoint != null)
+		{
+			_frontWheelJoint.enabled = false;
+		}
 
 		var rbs = GetComponentsInChildren<Rigidbody2D>();
 		foreach (var rb in rbs)

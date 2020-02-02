@@ -9,4 +9,5 @@ public class BikeConstructionData
 	public WheelItem backWheel;
 	public WheelItem frontWheel;
 	public HandlebarItem handlebars;
+	public SeatItem seatItem;
 }

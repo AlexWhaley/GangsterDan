@@ -2,5 +2,5 @@
 
 public class SeatItem : MonoBehaviour
 {
-	private Transform assPosition;
+	public Transform assPosition;
 }

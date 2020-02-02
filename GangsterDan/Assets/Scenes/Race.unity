@@ -187,6 +187,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1020848034021574448, guid: 407eedee530c8164ba37a6001d79b874,
+        type: 3}
+      propertyPath: _testData.frame
+      value: 
+      objectReference: {fileID: 2986231734286848082, guid: f26c73d974335a24196876ddaf3d5a46,
+        type: 3}
+    - target: {fileID: 1020848034021574448, guid: 407eedee530c8164ba37a6001d79b874,
+        type: 3}
+      propertyPath: _testData.backWheel
+      value: 
+      objectReference: {fileID: -2484765813024515875, guid: 14ba8324d6baffc4c889071262e2927c,
+        type: 3}
+    - target: {fileID: 1020848034021574448, guid: 407eedee530c8164ba37a6001d79b874,
+        type: 3}
+      propertyPath: _testData.frontWheel
+      value: 
+      objectReference: {fileID: -2484765813024515875, guid: fe6d758253089784a98914a4cd15766f,
+        type: 3}
+    - target: {fileID: 1020848034021574448, guid: 407eedee530c8164ba37a6001d79b874,
+        type: 3}
+      propertyPath: _testData.handlebars
+      value: 
+      objectReference: {fileID: -7813932185650791121, guid: 43485188b3d88454083cb51f17e0f442,
+        type: 3}
+    - target: {fileID: 1020848034021574448, guid: 407eedee530c8164ba37a6001d79b874,
+        type: 3}
+      propertyPath: _testData.seatItem
+      value: 
+      objectReference: {fileID: 1388752342783219687, guid: 6622f4f142ee3fd46923b30610c7e84e,
+        type: 3}
     - target: {fileID: 442974659293486803, guid: 407eedee530c8164ba37a6001d79b874,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -266,6 +296,15 @@ MonoBehaviour:
       bevelSize: 0
       spriteIndex: 0
       corner: 1
+    - position: {x: 5.9144745, y: -3.8963478, z: 0}
+      leftTangent: {x: 0, y: 0, z: 0}
+      rightTangent: {x: 0, y: 0, z: 0}
+      mode: 0
+      height: 1
+      bevelCutoff: 0
+      bevelSize: 0
+      spriteIndex: 0
+      corner: 0
     - position: {x: 12.959866, y: -4.00308, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
@@ -2016,8 +2055,8 @@ SpriteShapeRenderer:
   - {fileID: 1887494081247492234, guid: d501f6d7fa84c4038b7449696f44ff38, type: 3}
   - {fileID: -4069628985407814602, guid: a4fef30bb3ca5463a9c33c123a81604a, type: 3}
   m_LocalAABB:
-    m_Center: {x: 272.0721, y: -15.57082, z: -0.00594}
-    m_Extent: {x: 280.82196, y: 35.048813, z: 0.00594}
+    m_Center: {x: 272.0721, y: -15.57082, z: -0.005945}
+    m_Extent: {x: 280.82196, y: 35.048813, z: 0.005945}
 --- !u!68 &575875491
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -2034,8 +2073,8 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -8.659345, y: -3.1454945}
-  - {x: 12.937126, y: -3.472664}
+  - {x: -8.659345, y: -3.145495}
+  - {x: 12.937142, y: -3.4726624}
   - {x: 15.219469, y: -3.2424626}
   - {x: 20.11203, y: -1.7240798}
   - {x: 24.64323, y: -0.8063736}
@@ -2237,7 +2276,7 @@ EdgeCollider2D:
   - {x: -8.693438, y: -27.180988}
   - {x: -8.611038, y: -3.6826272}
   - {x: -8.609811, y: -3.3326268}
-  - {x: -8.659345, y: -3.1454945}
+  - {x: -8.659345, y: -3.145495}
 --- !u!1 &957035948
 GameObject:
   m_ObjectHideFlags: 0
