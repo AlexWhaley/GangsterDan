@@ -149,7 +149,14 @@ public class ScavengeManager : MonoBehaviour
 
     private void SpawnItem()
     {
-        var type = (ItemType)Random.Range(0, 4);
+        var randI = Random.Range(0, 5);
+
+        if (randI == 4)
+        {
+            randI = 3;
+        }
+
+        var type = (ItemType)randI;
 
         List<GameObject> itemList = new List<GameObject>();
 
