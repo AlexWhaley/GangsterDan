@@ -40,7 +40,7 @@ public class ScavengeManager : MonoBehaviour
         State = ScavengeState.Countdown;
         timeRemaining = 3.99f;
         CountdownText.text = "";
-        UpdateGameTimer();
+        TimerText.text = "60:00";
     }
 
     private void Update()
@@ -100,7 +100,9 @@ public class ScavengeManager : MonoBehaviour
 
     private void UpdateGameTimer()
     {
-        TimerText.text = string.Format("{0}:{1}", Mathf.FloorToInt(timeRemaining).ToString("D2"), (timeRemaining % 1).ToString());
+        int seconds = Mathf.FloorToInt(timeRemaining);
+        int milliseconds = Mathf.FloorToInt(timeRemaining % 1 * 100);
+        TimerText.text = string.Format("{0}:{1}", seconds.ToString("D2"), milliseconds.ToString("D2"));
     }
 
     private void UpdateCountdownTimer()
