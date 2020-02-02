@@ -20,8 +20,11 @@ public class ClawController : MonoBehaviour
     {
         interactDelay -= Time.deltaTime;
 
-        MoveClaw();
-        Interact();
+        if (ScavengeManager.Instance.State == ScavengeState.InGame)
+        {
+            MoveClaw();
+            Interact();
+        } 
     }
 
     private void MoveClaw()
