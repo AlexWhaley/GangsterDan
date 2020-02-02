@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +15,14 @@ public class ScavengeManager : MonoBehaviour
     [SerializeField] private Transform SpawnPoint;
     [SerializeField] private float SpawnDelay = 5;
     [SerializeField] private float TotalTime = 60.0f;
+
+    [Header("UI Elements")]
     [SerializeField] private Text TimerText;
     [SerializeField] private Text CountdownText;
+    [SerializeField] private GameObject FrameCheckmark;
+    [SerializeField] private GameObject WheelsCheckmark;
+    [SerializeField] private GameObject SeatCheckmark;
+    [SerializeField] private GameObject HandlebarsCheckmark;
 
     private List<ItemData> scavengedItems = new List<ItemData>();
     private float spawnTime = 0;
@@ -31,6 +38,7 @@ public class ScavengeManager : MonoBehaviour
         {
             Instance = this;
         }
+        Init();
     }
 
     public void Init()
@@ -39,7 +47,11 @@ public class ScavengeManager : MonoBehaviour
         State = ScavengeState.Countdown;
         timeRemaining = 3.99f;
         CountdownText.text = "";
-        UpdateGameTimer();
+        TimerText.text = "60:00";
+        FrameCheckmark.SetActive(false);
+        WheelsCheckmark.SetActive(false);
+        SeatCheckmark.SetActive(false);
+        HandlebarsCheckmark.SetActive(false);
     }
 
     private void Update()
@@ -88,6 +100,34 @@ public class ScavengeManager : MonoBehaviour
     public void CollectItem(ItemData item)
     {
         scavengedItems.Add(item);
+
+        switch (item.Type)
+        {
+            case ItemType.Wheel:
+                if (!WheelsCheckmark.activeSelf && scavengedItems.Where(x => x.Type == ItemType.Wheel).Count() >= 2)
+                {
+                    WheelsCheckmark.SetActive(true);
+                }
+                break;
+            case ItemType.Frame:
+                if (!FrameCheckmark.activeSelf)
+                {
+                    FrameCheckmark.SetActive(true);
+                }
+                break;
+            case ItemType.Seat:
+                if (!SeatCheckmark.activeSelf)
+                {
+                    SeatCheckmark.SetActive(true);
+                }
+                break;
+            case ItemType.Handlebars:
+                if (!HandlebarsCheckmark.activeSelf)
+                {
+                    HandlebarsCheckmark.SetActive(true);
+                }
+                break;
+        }
     }
 
     private void SpawnItem()
@@ -99,7 +139,9 @@ public class ScavengeManager : MonoBehaviour
 
     private void UpdateGameTimer()
     {
-        TimerText.text = string.Format("{0}:{1}", Mathf.FloorToInt(timeRemaining).ToString("D2"), (timeRemaining % 1).ToString());
+        int seconds = Mathf.FloorToInt(timeRemaining);
+        int milliseconds = Mathf.FloorToInt(timeRemaining % 1 * 100);
+        TimerText.text = string.Format("{0}:{1}", seconds.ToString("D2"), milliseconds.ToString("D2"));
     }
 
     private void UpdateCountdownTimer()
