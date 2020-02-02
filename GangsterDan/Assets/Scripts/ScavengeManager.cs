@@ -99,12 +99,12 @@ public class ScavengeManager : MonoBehaviour
 
     private void UpdateGameTimer()
     {
-        TimerText.text = string.Format("{0}:{1}", timeRemaining.ToString("D2"), (timeRemaining % 1).ToString());
+        TimerText.text = string.Format("{0}:{1}", Mathf.FloorToInt(timeRemaining).ToString("D2"), (timeRemaining % 1).ToString());
     }
 
     private void UpdateCountdownTimer()
     {
-        CountdownText.text = timeRemaining.ToString("D1");
+        CountdownText.text = Mathf.FloorToInt(timeRemaining).ToString("D1");
     }
 }
 
