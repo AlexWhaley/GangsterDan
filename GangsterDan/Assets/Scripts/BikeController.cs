@@ -152,7 +152,7 @@ public class BikeController : MonoBehaviour
 
 	private void FixedWheelDriveUpdate()
 	{
-		if (_backWheelJoint == null || _frontWheelJoint == null) return;
+		if (_backWheelJoint == null) return;
 
 		if (Input.GetKey(KeyCode.W) && _backWheelJoint.jointSpeed > -_motorForceMax)
 		{
@@ -189,7 +189,11 @@ public class BikeController : MonoBehaviour
 			if (_twoWheelDrive)
 			{
 				_frontWheelMotor.motorSpeed = _currentMotorForce;
-				_frontWheelJoint.motor = _frontWheelMotor;
+
+				if (_frontWheelJoint != null)
+				{
+					_frontWheelJoint.motor = _frontWheelMotor;
+				}
 			}
 		}
 	}
@@ -201,7 +205,10 @@ public class BikeController : MonoBehaviour
 
 		if (_twoWheelDrive)
 		{
-			_frontWheelJoint.useMotor = useMotors;
+			if (_frontWheelJoint != null)
+			{
+				_frontWheelJoint.useMotor = useMotors;
+			}
 		}
 	}
 
