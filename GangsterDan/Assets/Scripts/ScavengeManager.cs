@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +15,14 @@ public class ScavengeManager : MonoBehaviour
     [SerializeField] private Transform SpawnPoint;
     [SerializeField] private float SpawnDelay = 5;
     [SerializeField] private float TotalTime = 60.0f;
+
+    [Header("UI Elements")]
     [SerializeField] private Text TimerText;
     [SerializeField] private Text CountdownText;
+    [SerializeField] private GameObject FrameCheckmark;
+    [SerializeField] private GameObject WheelsCheckmark;
+    [SerializeField] private GameObject SeatCheckmark;
+    [SerializeField] private GameObject HandlebarsCheckmark;
 
     private List<ItemData> scavengedItems = new List<ItemData>();
     private float spawnTime = 0;
@@ -41,6 +48,10 @@ public class ScavengeManager : MonoBehaviour
         timeRemaining = 3.99f;
         CountdownText.text = "";
         TimerText.text = "60:00";
+        FrameCheckmark.SetActive(false);
+        WheelsCheckmark.SetActive(false);
+        SeatCheckmark.SetActive(false);
+        HandlebarsCheckmark.SetActive(false);
     }
 
     private void Update()
@@ -89,6 +100,34 @@ public class ScavengeManager : MonoBehaviour
     public void CollectItem(ItemData item)
     {
         scavengedItems.Add(item);
+
+        switch (item.Type)
+        {
+            case ItemType.Wheel:
+                if (!WheelsCheckmark.activeSelf && scavengedItems.Where(x => x.Type == ItemType.Wheel).Count() >= 2)
+                {
+                    WheelsCheckmark.SetActive(true);
+                }
+                break;
+            case ItemType.Frame:
+                if (!FrameCheckmark.activeSelf)
+                {
+                    FrameCheckmark.SetActive(true);
+                }
+                break;
+            case ItemType.Seat:
+                if (!SeatCheckmark.activeSelf)
+                {
+                    SeatCheckmark.SetActive(true);
+                }
+                break;
+            case ItemType.Handlebars:
+                if (!HandlebarsCheckmark.activeSelf)
+                {
+                    HandlebarsCheckmark.SetActive(true);
+                }
+                break;
+        }
     }
 
     private void SpawnItem()
