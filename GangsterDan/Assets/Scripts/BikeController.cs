@@ -2,14 +2,10 @@
 
 public class BikeController : MonoBehaviour
 {
-	[SerializeField]
-	private Rigidbody2D _frame;
-
-	[SerializeField]
 	private WheelJoint2D _backWheelJoint;
-
-	[SerializeField]
 	private WheelJoint2D _frontWheelJoint;
+	private FrameItem _frame;
+	private Rigidbody2D _frameRB;
 
 	[SerializeField]
 	private float _motorForceMax;
@@ -33,22 +29,96 @@ public class BikeController : MonoBehaviour
 	private bool _twoWheelDrive;
 
 	[SerializeField]
-	private Rigidbody2D _rigiDean;
-
-	[SerializeField]
 	private float _leanDeanForce;
 
 	[SerializeField]
-	private float _maxAngularDeanForce;
+	private float _leanFrameForce;
+
+	[SerializeField]
+	private float _maxAngularLeanForce;
 
 	private bool _useMotors;
+
+	[SerializeField]
+	private bool _useTestConfig;
+
+	[SerializeField]
+	private BikeConstructionData _testData;
+
+	[SerializeField]
+	private RagdollController _ragdollController;
+
+	private bool _isDead;
+
 
 	// Start is called before the first frame update
 	void Awake()
 	{
+		if (_useTestConfig)
+		{
+			ConstructBike(_testData);
+		}
+	}
+
+	private void ConstructBike(BikeConstructionData data)
+	{
+		GameObject frame = Instantiate(data.frame.gameObject, transform.position, transform.rotation);
+		_frame = frame.GetComponent<FrameItem>();
+
+		_frameRB = frame.GetComponent<Rigidbody2D>();
+		_frontWheelJoint = _frame.backWheelJoint;
+		_backWheelJoint = _frame.frontWheelJoint;
+
 		_backWheelMotor = _backWheelJoint.motor;
 		_frontWheelMotor = _frontWheelJoint.motor;
 
+		//Create back wheel
+		Vector3 backWheelWorldPos = frame.transform.TransformPoint(_backWheelJoint.anchor);
+		GameObject backWheel = Instantiate(data.backWheel.gameObject, backWheelWorldPos, frame.transform.rotation);
+
+		_backWheelJoint.connectedBody = backWheel.GetComponent<Rigidbody2D>();
+
+		// Create front wheel
+		Vector3 frontWheelWorldPos = frame.transform.TransformPoint(_frontWheelJoint.anchor);
+		GameObject frontWheel = Instantiate(data.frontWheel.gameObject, frontWheelWorldPos, frame.transform.rotation);
+
+		_frontWheelJoint.connectedBody = frontWheel.GetComponent<Rigidbody2D>();
+
+
+		GameObject handlebars = Instantiate(data.handlebars.gameObject, _frame.handlebarTransform);
+
+		Vector3 localSeatPosition = _frameRB.transform.InverseTransformPoint(_frame.seatTransform.position);
+		_ragdollController.SetSeatJointAnchor(_frameRB, localSeatPosition);
+
+		Vector3 localHandlebarPosition = _frameRB.transform.InverseTransformPoint(_frame.handlebarTransform.position);
+		_ragdollController.SetHandJointAnchor(_frameRB, localHandlebarPosition);
+		
+		SetConfiguredValues();
+		CameraDirector.Instance.SetTarget(_ragdollController.torso.transform);
+		_ragdollController.headCollisionEventSystem.onValidCollision += DestroyBike;
+	}
+
+	private void OnDestroy()
+	{
+		_ragdollController.headCollisionEventSystem.onValidCollision -= DestroyBike;
+	}
+
+	private void DestroyBike(Vector2 explosionPoint)
+	{
+		_backWheelJoint.enabled = false;
+		_frontWheelJoint.enabled = false;
+
+		var rbs = GetComponentsInChildren<Rigidbody2D>();
+		foreach (var rb in rbs)
+		{
+			rb.AddExplosionForce(10f, explosionPoint, 10f);
+		}
+
+		_isDead = true;
+	}
+
+	private void SetConfiguredValues()
+	{
 		var rbs = GetComponentsInChildren<Rigidbody2D>();
 		foreach (var rb in rbs)
 		{
@@ -61,10 +131,11 @@ public class BikeController : MonoBehaviour
 			wheel.breakForce = _breakForce;
 		}
 	}
-
 	// Update is called once per frame
 	void FixedUpdate()
 	{
+		if (_isDead) return;
+
 		FixedWheelDriveUpdate();
 		FixedDeanForceUpdate();
 	}
@@ -86,15 +157,13 @@ public class BikeController : MonoBehaviour
 		}
 		else if (Input.GetKey(KeyCode.S))
 		{
-			//_backWheelJoint.jointSpeed 
 			SetUseMotors(true);
 			_currentMotorForce += _motorForceDecceleration * Time.deltaTime;
 
-			if (_currentMotorForce < 0)
+			if (_currentMotorForce > _motorForceMax)
 			{
-				_currentMotorForce = 0;
+				_currentMotorForce = _motorForceMax;
 			}
-			_backWheelMotor.motorSpeed = 0;
 		}
 		else
 		{
@@ -130,25 +199,20 @@ public class BikeController : MonoBehaviour
 	{
 		if (Input.GetKey(KeyCode.A))// && _rigiDean.angularVelocity > - _maxAngularDeanForce)
 		{
-			float torque = _leanDeanForce * Time.deltaTime;
-			_rigiDean.AddTorque(torque / 30f);
+			_ragdollController.torso.AddTorque(_leanDeanForce * Time.deltaTime);
 
-			Debug.Log(_frame.angularVelocity);
-			if (_frame.angularVelocity < _maxAngularDeanForce)
+			if (_frameRB.angularVelocity < _maxAngularLeanForce)
 			{
-				_frame.AddTorque(torque);
+				_frameRB.AddTorque(_leanFrameForce * Time.deltaTime);
 			}
 		}
 		else if (Input.GetKey(KeyCode.D))// && _rigiDean.angularVelocity < _maxAngularDeanForce)
 		{
-			float torque = -_leanDeanForce * Time.deltaTime;
-			_rigiDean.AddTorque(torque / 30f);
+			_ragdollController.torso.AddTorque(-_leanDeanForce * Time.deltaTime);
 
-
-			Debug.Log(_frame.angularVelocity);
-			if (_frame.angularVelocity > -_maxAngularDeanForce)
+			if (_frameRB.angularVelocity > -_maxAngularLeanForce)
 			{
-				_frame.AddTorque(torque);
+				_frameRB.AddTorque(-_leanFrameForce * Time.deltaTime);
 			}
 		}
 	}
