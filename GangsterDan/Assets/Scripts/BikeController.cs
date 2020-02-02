@@ -66,8 +66,8 @@ public class BikeController : MonoBehaviour
 		_frame = frame.GetComponent<FrameItem>();
 
 		_frameRB = frame.GetComponent<Rigidbody2D>();
-		_frontWheelJoint = _frame.backWheelJoint;
-		_backWheelJoint = _frame.frontWheelJoint;
+		_backWheelJoint = _frame.backWheelJoint;
+		_frontWheelJoint = _frame.frontWheelJoint;
 
 		_backWheelMotor = _backWheelJoint.motor;
 		_frontWheelMotor = _frontWheelJoint.motor;
