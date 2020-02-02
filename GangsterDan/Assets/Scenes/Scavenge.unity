@@ -1165,6 +1165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1020303628}
   - component: {fileID: 1020303627}
+  - component: {fileID: 1020303629}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1187,13 +1188,40 @@ MonoBehaviour:
   State: 0
   ConveyorSpeed: 2
   SpawnableWheels:
+  - {fileID: 4853834662617373488, guid: 1613568682e6be9419f4086fb33a6438, type: 3}
+  - {fileID: 4853834662617373488, guid: 4d1cc3914748d8245873d4b862b8b90f, type: 3}
+  - {fileID: 4853834662617373488, guid: 7ded7b8462554e948a684a52d5f83c03, type: 3}
   - {fileID: 4853834662617373488, guid: 957872df7c391874b873f889396c7bd9, type: 3}
+  - {fileID: 4853834662617373488, guid: fe6d758253089784a98914a4cd15766f, type: 3}
+  - {fileID: 4853834662617373488, guid: 14ba8324d6baffc4c889071262e2927c, type: 3}
+  - {fileID: 4853834662617373488, guid: 8b39fc32c4287e2458b45d6778ec9bd0, type: 3}
+  - {fileID: 4853834662617373488, guid: 009f34bfc776110409a1d67a5ee425b1, type: 3}
+  - {fileID: 4853834662617373488, guid: e2557f61204810242b51985c7f4a6d23, type: 3}
+  - {fileID: 4853834662617373488, guid: 7c82fade6ac8d2a44a2d378591520765, type: 3}
   SpawnableFrames:
+  - {fileID: 2836139735616502462, guid: cae996cb878347a4da28bb5475df03fc, type: 3}
+  - {fileID: 2836139735616502462, guid: 7203a52f6e843944fa345e49a2a0f0a7, type: 3}
+  - {fileID: 2836139735616502462, guid: dc58647761fadf34698ab69db1b1a37b, type: 3}
+  - {fileID: 2836139735616502462, guid: 7f3226cf0b91da247b93143283d78138, type: 3}
+  - {fileID: 2836139735616502462, guid: d6c5099572fe458439b4526563a0d937, type: 3}
+  - {fileID: 2836139735616502462, guid: e073ca5eb5259c54c99235aae557fcec, type: 3}
   - {fileID: 2836139735616502462, guid: 8f1b71112d858914c9ab6dc37fbbbf60, type: 3}
+  - {fileID: 2836139735616502462, guid: f26c73d974335a24196876ddaf3d5a46, type: 3}
+  - {fileID: 2836139735616502462, guid: ee46cc6ab2e96b547a6cb121a22a44f0, type: 3}
   SpawnableSeats:
+  - {fileID: 8232964265027163351, guid: a7ab7b5b197ab1644b3aaa1e22e15da6, type: 3}
+  - {fileID: 8232964265027163351, guid: 64deae831697b01489d53bff3fded671, type: 3}
+  - {fileID: 8232964265027163351, guid: e21ebc6c5c0298844a89f0c04b2eac98, type: 3}
+  - {fileID: 8232964265027163351, guid: 6622f4f142ee3fd46923b30610c7e84e, type: 3}
+  - {fileID: 8232964265027163351, guid: e66a1d352e5382641ac63d3b201c3187, type: 3}
   - {fileID: 8232964265027163351, guid: 8f67d3befc5d7484fbff18a956454818, type: 3}
+  - {fileID: 8232964265027163351, guid: 0e5e9432f9ac6444eac7618329726fb6, type: 3}
   SpawnableHandlebars:
+  - {fileID: 1960266805957122624, guid: c1fdc013fd8a6fd41aebbffbc5f27bbd, type: 3}
+  - {fileID: 1960266805957122624, guid: 43485188b3d88454083cb51f17e0f442, type: 3}
   - {fileID: 1960266805957122624, guid: d0941c6e28c9049479459a284a9db7fd, type: 3}
+  - {fileID: 1960266805957122624, guid: 0dcdde12f7af7e547a92da8c8e92f292, type: 3}
+  - {fileID: 1960266805957122624, guid: 4e1cb4b2141ca984ca88606b79c04abf, type: 3}
   SpawnPoint: {fileID: 837478633}
   SpawnDelay: 3
   TotalTime: 90
@@ -1217,6 +1245,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1020303629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020303626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdcd1fcea1fc92b4d991289e95283367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BikeData:
+    frame: {fileID: 0}
+    backWheel: {fileID: 0}
+    frontWheel: {fileID: 0}
+    handlebars: {fileID: 0}
+    seatItem: {fileID: 0}
 --- !u!1 &1070407551
 GameObject:
   m_ObjectHideFlags: 0

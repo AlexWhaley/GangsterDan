@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1020848034021574451}
   - component: {fileID: 1020848034021574448}
   m_Layer: 0
-  m_Name: pfTestBike
+  m_Name: pfBike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
   _leanDeanForce: 100
   _leanFrameForce: 10000
   _maxAngularLeanForce: 10
-  _useTestConfig: 1
+  _useTestConfig: 0
   _testData:
     frame: {fileID: 2986231734286848082, guid: 8f1b71112d858914c9ab6dc37fbbbf60, type: 3}
     backWheel: {fileID: -2484765813024515875, guid: 957872df7c391874b873f889396c7bd9,
@@ -62,6 +62,7 @@ MonoBehaviour:
       type: 3}
     handlebars: {fileID: -7813932185650791121, guid: d0941c6e28c9049479459a284a9db7fd,
       type: 3}
+    seatItem: {fileID: 0}
   _ragdollController: {fileID: 1103476662853713386}
 --- !u!1001 &1020848034730131536
 PrefabInstance:

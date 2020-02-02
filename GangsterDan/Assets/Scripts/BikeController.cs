@@ -58,13 +58,20 @@ public class BikeController : MonoBehaviour
 	// Start is called before the first frame update
 	void Awake()
 	{
+		BikeConstructionData data;
 		if (_useTestConfig)
 		{
-			ConstructBike(_testData);
+			data = _testData;
 		}
+		else
+		{
+			data = GameDataManager.Instance.BikeData;
+		}
+
+		ConstructBike(data);
 	}
 
-	private void ConstructBike(BikeConstructionData data)
+	public void ConstructBike(BikeConstructionData data)
 	{
 		GameObject frame = Instantiate(data.frame.gameObject, transform.position, transform.rotation);
 		_frame = frame.GetComponent<FrameItem>();

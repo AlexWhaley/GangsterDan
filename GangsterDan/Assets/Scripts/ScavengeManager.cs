@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScavengeManager : MonoBehaviour
@@ -31,9 +32,10 @@ public class ScavengeManager : MonoBehaviour
     private List<int> wheelIndices = new List<int>();
     private List<int> frameIndices = new List<int>();
     private List<int> seatIndices = new List<int>();
-    private List<int> handlebarsIndices = new List<int>();
+    private List<int> handlebarIndices = new List<int>();
     private float spawnTime = 0;
     private float timeRemaining;
+    bool hasLoadedRace = false;
 
     private void Awake()
     {
@@ -59,6 +61,7 @@ public class ScavengeManager : MonoBehaviour
         WheelsCheckmark.SetActive(false);
         SeatCheckmark.SetActive(false);
         HandlebarsCheckmark.SetActive(false);
+        hasLoadedRace = false;
     }
 
     private void Update()
@@ -98,7 +101,7 @@ public class ScavengeManager : MonoBehaviour
             case ScavengeState.TimeFinished:
                 if (timeRemaining < 0.0f)
                 {
-                    // Go to next screen.
+                    MoveToRaceScene();
                 }
                 break;
         }
@@ -109,7 +112,7 @@ public class ScavengeManager : MonoBehaviour
         return wheelIndices.Count() >= 2 &&
                frameIndices.Count() >= 1 &&
                seatIndices.Count() >= 1 &&
-               handlebarsIndices.Count() >= 1;
+               handlebarIndices.Count() >= 1;
     }
 
     public void CollectItem(ItemData item)
@@ -138,7 +141,7 @@ public class ScavengeManager : MonoBehaviour
                 }
                 break;
             case ItemType.Handlebars:
-                handlebarsIndices.Add(item.Index);
+                handlebarIndices.Add(item.Index);
                 if (!HandlebarsCheckmark.activeSelf)
                 {
                     HandlebarsCheckmark.SetActive(true);
@@ -197,7 +200,21 @@ public class ScavengeManager : MonoBehaviour
             j.enabled = false;
         }
 
-        go.transform.localScale *= type == ItemType.Frame ? 1 : 1.5f;
+        if (type == ItemType.Handlebars)
+        {
+            go.transform.localScale *= 3;
+        }
+        else if (type != ItemType.Frame)
+        {
+            go.transform.localScale *= 2;
+        }
+
+        var rb = go.GetComponent<Rigidbody2D>();
+
+        if (rb == null)
+        {
+            go.AddComponent<Rigidbody2D>();
+        }
         go.GetComponent<Rigidbody2D>().collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
 
@@ -211,6 +228,77 @@ public class ScavengeManager : MonoBehaviour
     private void UpdateCountdownTimer()
     {
         CountdownText.text = Mathf.FloorToInt(timeRemaining).ToString("D1");
+    }
+
+    private void MoveToRaceScene()
+    {
+        if (!hasLoadedRace)
+        {
+            GameDataManager.Instance.BikeData = new BikeConstructionData()
+            {
+                frontWheel = GetWheel(),
+                backWheel = GetWheel(),
+                frame = GetFrame(),
+                seatItem = GetSeat(),
+                handlebars = GetHandlebar()
+            };
+
+            hasLoadedRace = true;
+
+            SceneManager.LoadScene("Race");
+        }
+    }
+
+    private WheelItem GetWheel()
+    {
+        if (wheelIndices.Count() > 0)
+        {
+            int i = Random.Range(0, wheelIndices.Count());
+            int index = wheelIndices[i];
+            wheelIndices.RemoveAt(i);
+
+            return SpawnableWheels[index].GetComponent<WheelItem>();
+        }
+        return null;
+    }
+
+    private FrameItem GetFrame()
+    {
+        if (frameIndices.Count() > 0)
+        {
+            int i = Random.Range(0, frameIndices.Count());
+            int index = frameIndices[i];
+            frameIndices.RemoveAt(i);
+
+            return SpawnableFrames[index].GetComponent<FrameItem>();
+        }
+        return null;
+    }
+
+    private SeatItem GetSeat()
+    {
+        if (seatIndices.Count() > 0)
+        {
+            int i = Random.Range(0, seatIndices.Count());
+            int index = seatIndices[i];
+            seatIndices.RemoveAt(i);
+
+            return SpawnableSeats[index].GetComponent<SeatItem>();
+        }
+        return null;
+    }
+
+    private HandlebarItem GetHandlebar()
+    {
+        if (handlebarIndices.Count() > 0)
+        {
+            int i = Random.Range(0, handlebarIndices.Count());
+            int index = handlebarIndices[i];
+            handlebarIndices.RemoveAt(i);
+
+            return SpawnableHandlebars[index].GetComponent<HandlebarItem>();
+        }
+        return null;
     }
 }
 
