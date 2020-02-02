@@ -64,18 +64,22 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1.429556, y: 0.8504776}
-      - {x: 1.5863087, y: 1.1580647}
+    - - {x: 1.1389514, y: 0.910308}
+      - {x: 1.2786093, y: 1.1067814}
       - {x: 0.95586467, y: 1.6016308}
+      - {x: 0.47534037, y: 1.5462567}
       - {x: -0.052707553, y: 0.9837322}
-      - {x: -1.270554, y: 0.9321852}
-      - {x: -1.477449, y: -0.2561214}
-      - {x: -0.9837045, y: -0.53032696}
+      - {x: -1.0483266, y: 1.017657}
+      - {x: -1.2039388, y: -0.2903102}
+      - {x: -0.93242127, y: -0.5816101}
+      - {x: -0.4509458, y: -0.68103886}
+      - {x: -0.6600274, y: -0.26758027}
       - {x: -0.57839566, y: 0.33103824}
       - {x: 0.49992323, y: 0.22833103}
-      - {x: 0.60532767, y: -0.6183747}
-      - {x: 1.1497703, y: -0.5584377}
-      - {x: 0.9706147, y: 1.0497086}
+      - {x: 0.44293094, y: -0.66111064}
+      - {x: 1.013015, y: -0.61826813}
+      - {x: 0.85129267, y: 0.46646965}
+      - {x: 0.825312, y: 1.0497086}
 --- !u!50 &2836139735616502460
 Rigidbody2D:
   serializedVersion: 4
@@ -88,7 +92,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 3.1346703
+  m_Mass: 2.8447955
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -111,7 +115,7 @@ WheelJoint2D:
   m_BreakForce: 1500
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: -1, y: -0.5}
+  m_Anchor: {x: -0.79486716, y: -0.5170944}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_Suspension:
     m_DampingRatio: 0
@@ -135,7 +139,7 @@ WheelJoint2D:
   m_BreakForce: 1500
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 1, y: -0.5}
+  m_Anchor: {x: 0.73503685, y: -0.55128324}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_Suspension:
     m_DampingRatio: 0
@@ -188,7 +192,7 @@ Transform:
   m_GameObject: {fileID: 2836139736810912111}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1.21, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2836139735616502463}
   m_RootOrder: 0
@@ -230,7 +234,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 4bbeb710ad93b6d4a8c5ed947a9afbeb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -266,7 +270,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2986231733116062070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.223, y: 0.973, z: 0}
+  m_LocalPosition: {x: -0.266, y: 0.888, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2836139735616502463}
@@ -296,7 +300,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2986231733607375798}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.76, y: 1.528, z: 0}
+  m_LocalPosition: {x: 0.717, y: 1.494, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2836139735616502463}
